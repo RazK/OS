@@ -10,8 +10,10 @@
    */
 double osm_operation_time(unsigned int iterations){
     int i = 0;
-    int temp;
-    double start = gettimeofday();
+    int temp, codeStart, codeEnd;
+    struct timeval begin, end;
+
+    codeStart = gettimeofday(&begin, NULL);
 
     while (i < iterations){
         temp + 1;
@@ -28,10 +30,11 @@ double osm_operation_time(unsigned int iterations){
         i += 10;
     }
 
-    double end = gettimeofday();
+    codeEnd = gettimeofday(&end, NULL);
 
-    if (start != -1 && end != -1){
-        return end - start; // div by 1000 for nanoseconds?
+
+    if (codeStart != -1 && codeEnd != -1){
+        return (double) (end.tv_sec - begin.tv_sec) + ((end.tv_usec - beign.tv_usec)/1000000.0);
     }
     return -1;
 
@@ -52,8 +55,10 @@ double osm_function_time(unsigned int iterations);
    */
 double osm_syscall_time(unsigned int iterations){
     int i = 0;
-    int temp;
-    double start = gettimeofday();
+    int temp, codeStart, codeEnd;
+    struct timeval begin, end;
+
+    codeStart = gettimeofday(&begin, NULL);
 
     while (i < iterations){
         OSM_NULLSYSCALL;
@@ -68,10 +73,11 @@ double osm_syscall_time(unsigned int iterations){
         i += 10;
     }
 
-    double end = gettimeofday();
+    codeEnd = gettimeofday(&end, NULL);
 
-    if (start != -1 && end != -1){
-        return end - start; // div by 1000 for nanoseconds?
+
+    if (codeStart != -1 && codeEnd != -1){
+        return (double) (end.tv_sec - begin.tv_sec) + ((end.tv_usec - beign.tv_usec)/1000000.0);
     }
     return -1;
 }
