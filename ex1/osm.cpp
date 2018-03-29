@@ -59,11 +59,14 @@ int osm_finalizer()
    and -1 upon failure.
    */
 double osm_operation_time(unsigned int iterations){
-    int i = 0;
-    int temp, codeStart, codeEnd;
+    unsigned int i = 0;
+    int temp;
     struct timeval begin, end;
 
-    codeStart = gettimeofday(&begin, NULL);
+    // Start the clock!
+    if (-1 == gettimeofday(&begin, nullptr)){
+        return -1;
+    }
 
     while (i < iterations){
         temp + 1;
@@ -80,15 +83,12 @@ double osm_operation_time(unsigned int iterations){
         i += 10;
     }
 
-    codeEnd = gettimeofday(&end, NULL);
-
-
-    if (codeStart != -1 && codeEnd != -1){
-        return (double) (end.tv_sec - begin.tv_sec) + ((end.tv_usec - beign.tv_usec)/1000000.0);
+    // Stop the clock!
+    if (-1 == gettimeofday(&end, nullptr)){
+        return -1;
     }
-    return -1;
 
-
+    return (double) (end.tv_sec - begin.tv_sec) + ((end.tv_usec - begin.tv_usec)/1000000.0);
 }
 
 
@@ -103,7 +103,9 @@ double osm_function_time(unsigned int iterations)
     struct timeval begin, end;
 
     // Start the clock!
-    gettimeofday(&begin, nullptr);
+    if (-1 == gettimeofday(&begin, nullptr)){
+        return -1;
+    }
 
     // Iterate and unroll
     for (unsigned int i = 0; i < iterations; i += UNROLLING_FACTOR)
@@ -114,7 +116,9 @@ double osm_function_time(unsigned int iterations)
     }
 
     // Stop the clock!
-    gettimeofday(&end, nullptr);
+    if (-1 == gettimeofday(&end, nullptr)){
+        return -1;
+    }
 
     // Calc the total number of ms that the code took:
     double elapsed_sec = (end.tv_sec - begin.tv_sec) +
@@ -129,11 +133,13 @@ double osm_function_time(unsigned int iterations)
    and -1 upon failure.
    */
 double osm_syscall_time(unsigned int iterations){
-    int i = 0;
-    int temp, codeStart, codeEnd;
+    unsigned int i = 0;
     struct timeval begin, end;
 
-    codeStart = gettimeofday(&begin, NULL);
+    // Start the clock!
+    if (-1 == gettimeofday(&begin, nullptr)){
+        return -1;
+    }
 
     while (i < iterations){
         OSM_NULLSYSCALL;
@@ -145,14 +151,15 @@ double osm_syscall_time(unsigned int iterations){
         OSM_NULLSYSCALL;
         OSM_NULLSYSCALL;
         OSM_NULLSYSCALL;
+        OSM_NULLSYSCALL;
+        
         i += 10;
     }
 
-    codeEnd = gettimeofday(&end, NULL);
-
-
-    if (codeStart != -1 && codeEnd != -1){
-        return (double) (end.tv_sec - begin.tv_sec) + ((end.tv_usec - beign.tv_usec)/1000000.0);
+    // Stop the clock!
+    if (-1 == gettimeofday(&end, nullptr)){
+        return -1;
     }
-    return -1;
+
+    return (double) (end.tv_sec - begin.tv_sec) + ((end.tv_usec - begin.tv_usec)/1000000.0);
 }
