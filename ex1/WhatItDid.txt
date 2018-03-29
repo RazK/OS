@@ -1,0 +1,132 @@
+#####################
+# BRIEF DESCRIPTION #
+#####################
+Running 'WhatIDo XXX' does the following:
+Opens a new file at 'Welcome/To/OS2018',
+Writes the following len(<username>)+68+len(XXX) characters to that file: 
+	<username>
+	If you haven't read the course guidelines yet --- do it right now!
+	XXX
+Then closes the file, 
+Deletes it (and by that makes its space available for reuse),
+Removes the directories it created along its path,
+And finally exists all the threads in the process.
+
+#################
+# FULL ANALYSIS #
+#################
+
+# Execute (program,argument list, its environment list) = success  
+execve("./WhatIDo", ["WhatIDo", "1"], [/* 75 vars */]) = 0
+
+# Determine the location of the pointer in the process memory address space
+brk(NULL)                               = 0x55cdbb409000
+
+# Checks if the file exists = FAIL
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+
+# Allocate 1228B of memory at the location of the kernel‘s choice (NULL), 
+# Allow reads and writes, anonymous memory, not backed by a file fd =-1,
+# No offset from start address = the address of the start of the mapped memory
+mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f72d4819000
+
+# Checks if the file exists with read access = FAIL
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+
+# Open the file as read only and assign FD as 3 
+open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+
+# The above file fd=3 is a regular file with permissions 0644 and 387285 Bytes in size
+fstat(3, {st_mode=S_IFREG|0644, st_size=387285, ...}) = 0
+
+# Allocate 387285 Bytes of memory for FD3 at any location (NULL), 
+# Allow reads  and writes, private process memory with no
+# offset from the start address =  start of mapped mem 
+mmap(NULL, 387285, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f72d47ba000
+
+# Close  the FD and return integer 3 to the OS
+close(3)                                = 0
+
+
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+
+
+open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+
+
+read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\320\3\2\0\0\0\0\0@\0\0\0\0\0\0\0P\265\31\0\0\0\0\0\0\0\0\0@\0008\0\n\0@\0G\0F\0\6\0\0\0\5\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0000\2\0\0\0\0\0\0000\2\0\0\0\0\0\0\10\0\0\0\0\0\0\0\3\0\0\0\4\0\0\0\340\256\26\0\0\0\0\0\340\256\26\0\0\0\0\0\340\256\26\0\0\0\0\0\34\0\0\0\0\0\0\0\34\0\0\0\0\0\0\0\20\0\0\0\0\0\0\0\1\0\0\0\5\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\350H\31\0\0\0\0\0\350H\31\0\0\0\0\0\0\0 \0\0\0\0\0\1\0\0\0\6\0\0\0\310W\31\0\0\0\0\0\310W9\0\0\0\0\0\310W9\0\0\0\0\0008O\0\0\0\0\0\0\330\221\0\0\0\0\0\0\0\0 \0\0\0\0\0\2\0\0\0\6\0\0\0\240\213\31\0\0\0\0\0\240\2139\0\0\0\0\0\240\2139\0\0\0\0\0\340\1\0\0\0\0\0\0\340\1\0\0\0\0\0\0\10\0\0\0\0\0\0\0\4\0\0\0\4\0\0\0p\2\0\0\0\0\0\0p\2\0\0\0\0\0\0p\2\0\0\0\0\0\0D\0\0\0\0\0\0\0D\0\0\0\0\0\0\0\4\0\0\0\0\0\0\0\7\0\0\0\4\0\0\0\310W\31\0\0\0\0\0\310W9\0\0\0\0\0\310W9\0\0\0\0\0\20\0\0\0\0\0\0\0x\0\0\0\0\0\0\0\10\0\0\0\0\0\0\0P\345td\4\0\0\0\374\256\26\0\0\0\0\0\374\256\26\0\0\0\0\0\374\256\26\0\0\0\0\0\224Y\0\0\0\0\0\0\224Y\0\0\0\0\0\0\4\0\0\0\0\0\0\0Q\345td\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\20\0\0\0\0\0\0\0R\345td\4\0\0\0\310W\31\0\0\0\0\0\310W9\0\0\0\0\0\310W9\0\0\0\0\00088\0\0\0\0\0\00088\0\0\0\0\0\0\1\0\0\0\0\0\0\0\4\0\0\0\24\0\0\0\3\0\0\0GNU\0yE\17n6(xe\320\223\352 \233\205\242\" \231%\377\4\0\0\0\20\0\0\0\1\0\0\0GNU\0\0\0\0\0\2\0\0\0\6\0\0\0 \0\0\0\0\0\0\0\363\3\0\0\10\0\0\0\0\1\0\0\16\0\0\0\0000\20D\240 \2\1\210\3\346\220\305E\214\0\304\0\10\0\5\204\0`\300\200\0\r\212\f\0\4\20\0\210@2\10*@\210T<, \0162H&\204\300\214\4\10\0\2\2\16\241\254\32\4f\300\0\3002\0\300\0P\1 \201\10\204\v  ($\0\4 Z\0\20X\200\312DB(\0\6\200\20\30B\0 @\200\0IP\0Q\212@\22\0\0\0\0\10\0\0\21\20", 832) = 832
+
+
+fstat(3, {st_mode=S_IFREG|0755, st_size=1689360, ...}) = 0
+
+
+mmap(NULL, 3795360, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f72d425a000
+
+
+mprotect(0x7f72d43ef000, 2097152, PROT_NONE) = 0
+
+
+mmap(0x7f72d45ef000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x195000) = 0x7f72d45ef000
+
+
+mmap(0x7f72d45f5000, 14752, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f72d45f5000
+
+
+close(3)                                = 0
+
+
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f72d47b8000
+
+
+arch_prctl(ARCH_SET_FS, 0x7f72d47b8700) = 0
+
+
+mprotect(0x7f72d45ef000, 16384, PROT_READ) = 0
+
+
+mprotect(0x55cdbb1fe000, 4096, PROT_READ) = 0
+
+
+mprotect(0x7f72d481c000, 4096, PROT_READ) = 0
+
+
+munmap(0x7f72d47ba000, 387285)          = 0
+
+
+mkdir("Welcome", 0775)                  = 0
+
+
+mkdir("Welcome/To", 0775)               = 0
+
+
+brk(NULL)                               = 0x55cdbb409000
+
+
+brk(0x55cdbb42a000)                     = 0x55cdbb42a000
+
+
+open("Welcome/To/OS2018", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3
+
+
+fstat(3, {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+
+
+write(3, "razkarl\nIf you haven't read the course guidelines yet --- do it right now!\n1", 76) = 76
+
+
+close(3)                                = 0
+
+
+unlink("Welcome/To/OS2018")             = 0
+
+
+rmdir("Welcome/To/")                    = 0
+
+
+rmdir("Welcome/")                       = 0
+
+
+exit_group(0)                           = ?
+
+
++++ exited with 0 +++
