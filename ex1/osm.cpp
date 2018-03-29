@@ -84,7 +84,12 @@ double osm_operation_time(unsigned int iterations){
 
 
     if (codeStart != -1 && codeEnd != -1){
-        return (double) (end.tv_sec - begin.tv_sec) + ((end.tv_usec - beign.tv_usec)/1000000.0);
+        // Calc the total number of ms that the code took:
+        double elapsed_sec = (end.tv_sec - begin.tv_sec) +
+                             ((end.tv_usec - begin.tv_usec) * SEC_IN_MICRS);
+
+        // Return elapsed in nano-seconds
+        return elapsed_sec * SEC_TO_NANOS;
     }
     return -1;
 
@@ -152,7 +157,14 @@ double osm_syscall_time(unsigned int iterations){
 
 
     if (codeStart != -1 && codeEnd != -1){
-        return (double) (end.tv_sec - begin.tv_sec) + ((end.tv_usec - beign.tv_usec)/1000000.0);
+        // Calc the total number of ms that the code took:
+        double elapsed_sec = (end.tv_sec - begin.tv_sec) +
+                             ((end.tv_usec - begin.tv_usec) * SEC_IN_MICRS);
+
+        // Return elapsed in nano-seconds
+        return elapsed_sec * SEC_TO_NANOS;
     }
     return -1;
 }
+
+
