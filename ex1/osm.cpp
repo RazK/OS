@@ -69,16 +69,16 @@ double osm_operation_time(unsigned int iterations){
     }
 
     while (i < iterations){
-        temp + 1;
-        temp + 1;
-        temp + 1;
-        temp + 1;
-        temp + 1;
-        temp + 1;
-        temp + 1;
-        temp + 1;
-        temp + 1;
-        temp + 1;
+        temp += 1;
+        temp += 1;
+        temp += 1;
+        temp += 1;
+        temp += 1;
+        temp += 1;
+        temp += 1;
+        temp += 1;
+        temp += 1;
+        temp += 1;
 
         i += 10;
     }
@@ -102,7 +102,7 @@ double osm_operation_time(unsigned int iterations){
    and -1 upon failure.
    */
 void empty(){};
-double osm_function_time(unsigned int iterations)
+double osm_function_time_template(unsigned int iterations)
 {
     // Prepare structs for timing calculations
     struct timeval begin, end;
@@ -128,6 +128,47 @@ double osm_function_time(unsigned int iterations)
     // Calc the total number of ms that the code took:
     double elapsed_sec = (end.tv_sec - begin.tv_sec) +
                         ((end.tv_usec - begin.tv_usec) * SEC_IN_MICRS);
+
+    // Return elapsed in nano-seconds
+    return elapsed_sec * SEC_TO_NANOS;
+}
+
+
+double osm_function_time(unsigned int iterations)
+{
+    // Prepare structs for timing calculations
+    unsigned int i = 0;
+    struct timeval begin, end;
+
+    // Start the clock!
+    if (-1 == gettimeofday(&begin, nullptr)){
+        return -1;
+    }
+
+    // Iterate and unroll
+    while (i < iterations){
+        empty();
+        empty();
+        empty();
+        empty();
+        empty();
+        empty();
+        empty();
+        empty();
+        empty();
+        empty();
+
+        i += 10;
+    }
+
+    // Stop the clock!
+    if (-1 == gettimeofday(&end, nullptr)){
+        return -1;
+    }
+
+    // Calc the total number of ms that the code took:
+    double elapsed_sec = (end.tv_sec - begin.tv_sec) +
+                         ((end.tv_usec - begin.tv_usec) * SEC_IN_MICRS);
 
     // Return elapsed in nano-seconds
     return elapsed_sec * SEC_TO_NANOS;

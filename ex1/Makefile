@@ -15,7 +15,7 @@ TARGETS = $(OSMLIB)
 TAR=tar
 TARFLAGS=-cvf
 TARNAME=ex1.tar
-TARSRCS=$(LIBSRC) Makefile README
+TARSRCS=$(LIBSRC) Makefile README graph.png
 
 all: $(TARGETS)
 
@@ -29,7 +29,7 @@ clean:
 depend:
 	makedepend -- $(CFLAGS) -- $(SRC) $(LIBSRC)
 
-main: main.o libosm.a
+main: main.cpp libosm.a
 	g++ -std=c++11 -Wall main.cpp libosm.a -o main
 
 tar:

@@ -22,6 +22,10 @@ int main(int argc, char** argv){
     t = osm_function_time(iterations);
     std::cout << "Full interval: " << t << ". Per iteration: " << (t / iterations) << std::endl;
 
+    std::cout << "Running alternate function call test..." << std::endl;
+    t = osm_function_time_template(iterations);
+    std::cout << "Full interval: " << t << ". Per iteration: " << (t / iterations) << std::endl;
+
     std::cout << "Running sys trap test..." << std::endl;
     t = osm_syscall_time(iterations);
     std::cout << "Full interval: " << t << ". Per iteration: " << (t / iterations) << std::endl;

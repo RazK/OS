@@ -33,6 +33,8 @@ int osm_finalizer();
    */
 double osm_operation_time(unsigned int iterations);
 
+double osm_function_time_template(unsigned int iterations);
+
 
 /* Time measurement function for an empty function call.
    returns time in nano-seconds upon success,
