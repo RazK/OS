@@ -111,7 +111,7 @@ open("Welcome/To/OS2018", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3
 fstat(3, {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
 
 
-write(3, "razkarl\nIf you haven't read the course guidelines yet --- do it right now!\n1", 76) = 76
+write(3, "razkarl\nIf you haven't read the course guidelines yet --- do it right now!\nXXX", 78) = 78
 
 
 close(3)                                = 0
