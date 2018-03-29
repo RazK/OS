@@ -68,9 +68,6 @@ double osm_operation_time(unsigned int iterations);
 void empty(){};
 double osm_function_time(unsigned int iterations)
 {
-    // Calculate rolling iterations
-    int rolling_iterations = iterations / UNROLLING_FACTOR;
-
     // Prepare structs for timing calculations
     struct timeval begin, end;
 
@@ -78,7 +75,7 @@ double osm_function_time(unsigned int iterations)
     gettimeofday(&begin, nullptr);
 
     // Iterate and unroll
-    for (int i = 0; i < rolling_iterations; i++)
+    for (unsigned int i = 0; i < iterations; i += UNROLLING_FACTOR)
     {
         // Unroll 10 times (or whatever UNROLLING_FACTOR equals to)
         // 10 x call empty()
