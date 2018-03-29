@@ -3,20 +3,30 @@ Shimon Heimowitz (203631676), Raz Karl (311143127)
 EX: 1
 
 FILES:
-myfile.c -- a file with some code
-myfile.h -- a file with some headers
+osm.h       -- header file for OSM timing library
+osm.cpp     -- Definition of OSM timing library
+main.cpp    -- Runs program for some number of iterations.
+graph.png   -- An image file of the graph of analysis times.
 
 REMARKS:
-These are some remarks that
-I want the graders to know
-about this submission.
+We have supplied an implementation for running the program from cmd line (main)
 
 ANSWERS:
 
-Q1:
-Here are answers to theoreical questions
-if there were such questions in the exercise.
+Assignment 1:
+#####################
+# BRIEF DESCRIPTION #
+#####################
+Running 'WhatIDo XXX' does the following:
+Gets some input string (call it 'XXX') from the user,
+Opens a new file at 'Welcome/To/OS2018',
+Writes the following len(<username>)+68+len(XXX) characters to that file:
+	<username>
+	If you haven't read the course guidelines yet --- do it right now!
+	XXX
+Then closes the file,
+Deletes it (and by that makes its space available for reuse),
+Removes the directories it created along its path,
+And finally exists all the threads in the process.
 
-Q2:
-Here are answers to theoreical questions
-if there were such questions in the exercise.
+
