@@ -2,7 +2,7 @@ CC=g++
 CXX=g++
 RANLIB=ranlib
 
-LIBSRC=osm.cpp
+LIBSRC=osm.cpp main.cpp
 LIBOBJ=$(LIBSRC:.cpp=.o)
 
 INCS=-I.
@@ -29,5 +29,12 @@ clean:
 depend:
 	makedepend -- $(CFLAGS) -- $(SRC) $(LIBSRC)
 
+main: main.o libosm.a
+	g++ -std=c++11 -Wall main.cpp libosm.a -o main
+
 tar:
 	$(TAR) $(TARFLAGS) $(TARNAME) $(TARSRCS)
+
+
+
+
