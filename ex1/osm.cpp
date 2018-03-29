@@ -1,6 +1,7 @@
 //
 // Created by heimy4prez on 3/29/18.
 //
+#include osm.h
 
 
 /* Time measurement function for a simple arithmetic operation.
@@ -30,7 +31,7 @@ double osm_operation_time(unsigned int iterations){
     double end = gettimeofday();
 
     if (start != -1 && end != -1){
-        return end - start; // div by 1000 for miliseconds?
+        return end - start; // div by 1000 for nanoseconds?
     }
     return -1;
 
@@ -49,4 +50,28 @@ double osm_function_time(unsigned int iterations);
    returns time in nano-seconds upon success,
    and -1 upon failure.
    */
-double osm_syscall_time(unsigned int iterations);
+double osm_syscall_time(unsigned int iterations){
+    int i = 0;
+    int temp;
+    double start = gettimeofday();
+
+    while (i < iterations){
+        OSM_NULLSYSCALL;
+        OSM_NULLSYSCALL;
+        OSM_NULLSYSCALL;
+        OSM_NULLSYSCALL;
+        OSM_NULLSYSCALL;
+        OSM_NULLSYSCALL;
+        OSM_NULLSYSCALL;
+        OSM_NULLSYSCALL;
+        OSM_NULLSYSCALL;
+        i += 10;
+    }
+
+    double end = gettimeofday();
+
+    if (start != -1 && end != -1){
+        return end - start; // div by 1000 for nanoseconds?
+    }
+    return -1;
+}
