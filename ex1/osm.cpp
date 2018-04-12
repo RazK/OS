@@ -70,15 +70,15 @@ double osm_operation_time(unsigned int iterations){
 
     while (i < iterations){
         temp += 1;
-        temp += 1;
-        temp += 1;
-        temp += 1;
-        temp += 1;
-        temp += 1;
-        temp += 1;
-        temp += 1;
-        temp += 1;
-        temp += 1;
+        temp += 2;
+        temp += 3;
+        temp += 4;
+        temp += 5;
+        temp += 6;
+        temp += 7;
+        temp += 8;
+        temp += 9;
+        temp += 10;
 
         i += 10;
     }
@@ -147,16 +147,16 @@ double osm_function_time(unsigned int iterations)
 
     // Iterate and unroll
     while (i < iterations){
-        empty();
-        empty();
-        empty();
-        empty();
-        empty();
-        empty();
-        empty();
-        empty();
-        empty();
-        empty();
+        empty(); // 1
+        empty(); // 2
+        empty(); // 3
+        empty(); // 4
+        empty(); // 5
+        empty(); // 6
+        empty(); // 7
+        empty(); // 8
+        empty(); // 9
+        empty(); // 10
 
         i += 10;
     }
